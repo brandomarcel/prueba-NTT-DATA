@@ -1,0 +1,94 @@
+<div class="product-list-container">
+    <div class="search-and-add-container">
+      <div class="search-bar">
+        <input 
+          type="text" 
+          placeholder="Buscar..." 
+          (input)="search($event)" 
+          class="search-input">
+      </div>
+      <button (click)="addProduct()" class="add-product-button">Agregar</button>
+    </div>
+  
+    <div *ngIf="loading" class="skeleton-container">
+      <div class="skeleton-item" *ngFor="let item of [1,2,3,4,5]">
+        <div class="skeleton-logo"></div>
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+      </div>
+    </div>
+  
+    <div *ngIf="!loading" class="product-table-container">
+      <div class="table-responsive">
+        <table class="product-table">
+          <thead>
+            <tr>
+              <th>Logo</th>
+              <th>Nombre del producto</th>
+              <th>Descripción <i class="info-icon">i</i></th>
+              <th>Fecha de liberación <i class="info-icon">i</i></th>
+              <th>Fecha de reestructuración <i class="info-icon">i</i></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of paginatedProducts">
+              <td><img [src]="product.logo" alt="{{ product.name }}"></td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.description }}</td>
+              <td>{{ product.date_release }}</td>
+              <td>{{ product.date_revision }}</td>
+              <td class="dropdown-container">
+                <div class="dropdown">
+                  <button class="dropdown-toggle" (click)="toggleDropdown($event)">⋮</button>
+                  <div class="dropdown-menu">
+                    <a (click)="editProduct(product.id)">Editar</a>
+                    <a (click)="confirmDeleteProduct(product.id)">Eliminar</a>
+                  </div>
+                </div>
+              </td>
+              
+              
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination-container">
+        <div class="pagination-info">{{ filteredProducts.length }} Resultados</div>
+        <select class="pagination-select" (change)="changePageSize($event)">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message-container">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="success-message-container">
+      {{ successMessage }}
+    </div>
+    
+  </div>
+  
+  <!-- Modal Eliminación -->
+  <div *ngIf="showDeleteModal" class="modal">
+    <div class="modal-content">
+      <h3>Confirmar Eliminación</h3>
+      <p>¿Estás seguro de que deseas eliminar el producto {{productIdToDelete}}?</p>
+      <div class="modal-separation">
+        <hr>
+      </div>
+      <div class="modal-actions">
+        <button (click)="cancelDelete()">Cancelar</button>
+        <button (click)="deleteProduct()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+  
+

@@ -1,0 +1,82 @@
+<div class="form-container">
+    <h2>Formulario de Registro</h2>
+    <hr>
+    <form [formGroup]="editProductForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id">ID</label>
+          <input id="id" formControlName="id" type="text" class="form-control" />
+          <div *ngIf="editProductForm.controls['id'].invalid && editProductForm.controls['id'].touched">
+            <small *ngIf="editProductForm.controls['id'].errors?.['required']">ID es requerido.</small>
+            <small *ngIf="editProductForm.controls['id'].errors?.['minlength']">ID debe tener al menos 3 caracteres.</small>
+            <small *ngIf="editProductForm.controls['id'].errors?.['maxlength']">ID no puede tener más de 10 caracteres.</small>
+            <small *ngIf="editProductForm.controls['id'].errors?.['idTaken']">ID ya existe.</small>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input id="name" formControlName="name" type="text" class="form-control" />
+          <div *ngIf="editProductForm.controls['name'].invalid && editProductForm.controls['name'].touched">
+            <small *ngIf="editProductForm.controls['name'].errors?.['required']">Nombre es requerido.</small>
+            <small *ngIf="editProductForm.controls['name'].errors?.['minlength']">Nombre debe tener al menos 5 caracteres.</small>
+            <small *ngIf="editProductForm.controls['name'].errors?.['maxlength']">Nombre no puede tener más de 100 caracteres.</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <input id="description" formControlName="description" type="text" class="form-control" />
+        <div *ngIf="editProductForm.controls['description'].invalid && editProductForm.controls['description'].touched">
+          <small *ngIf="editProductForm.controls['description'].errors?.['required']">Descripción es requerida.</small>
+          <small *ngIf="editProductForm.controls['description'].errors?.['minlength']">Descripción debe tener al menos 10 caracteres.</small>
+          <small *ngIf="editProductForm.controls['description'].errors?.['maxlength']">Descripción no puede tener más de 200 caracteres.</small>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="logo">Logo</label>
+        <input id="logo" formControlName="logo" type="text" class="form-control" />
+        <div *ngIf="editProductForm.controls['logo'].invalid && editProductForm.controls['logo'].touched">
+          <small *ngIf="editProductForm.controls['logo'].errors?.['required']">Logo es requerido.</small>
+        </div>
+      </div>
+    </div>
+  
+    <div class="form-row">
+        <div class="form-group">
+            <label for="date_release">Fecha de Liberación</label>
+            <input id="date_release" formControlName="date_release" type="date" class="form-control"/>
+            <div *ngIf="editProductForm.controls['date_release'].invalid && editProductForm.controls['date_release'].touched">
+              <small *ngIf="editProductForm.controls['date_release'].errors?.['required']">Fecha de Liberación es requerida.</small>
+              <small *ngIf="editProductForm.controls['date_release'].errors?.['invalidDate']">Fecha debe ser igual o mayor a la fecha actual.</small>
+            </div>
+          </div>
+  
+      <div class="form-group">
+        <label for="date_revision">Fecha de Revisión</label>
+        <input id="date_revision" formControlName="date_revision" type="date" class="form-control"/>
+        <div *ngIf="editProductForm.controls['date_revision'].invalid && editProductForm.controls['date_revision'].touched">
+          <small *ngIf="editProductForm.controls['date_revision'].errors?.['required']">Fecha de Revisión es requerida.</small>
+          <small *ngIf="editProductForm.controls['date_revision'].errors?.['invalidRevisionDate']">Fecha debe ser exactamente un año posterior a la fecha de liberación.</small>
+        </div>
+      </div>
+    </div>
+  
+      <div class="button-group">
+        <button type="button" (click)="onReset()">Reiniciar</button>
+        <button type="submit" >Enviar</button>  
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message-container">
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="successMessage" class="success-message-container">
+        {{ successMessage }}
+      </div>
+      
+    </form>
+  </div>
+  
